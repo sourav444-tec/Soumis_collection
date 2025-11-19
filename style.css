@@ -91,7 +91,8 @@ body {
 .hero {
   height: 600px;
   /* Background image goes here - create an images/hero.jpg file or change the path to your image */
-  background-image: url('images/hero.jpg'), linear-gradient(135deg, #f9f6f1 0%, #ede6dd 50%, #e0d4c3 100%);
+    /* uses a stylized oxidised-silver pendant SVG in images/hero.svg */
+    background-image: url('images/hero.svg'), linear-gradient(135deg, #f9f6f1 0%, #ede6dd 50%, #e0d4c3 100%);
   background-size: cover, cover;
   background-position: center center, center center;
   background-repeat: no-repeat, no-repeat;
