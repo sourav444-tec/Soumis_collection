@@ -90,11 +90,12 @@ body {
 /* Hero Section */
 .hero {
   height: 600px;
-  /* Jewelry portrait background */
-  background-image: url('images/hero.jpg'), linear-gradient(135deg, #f9f6f1 0%, #ede6dd 50%, #e0d4c3 100%);
+  /* Jewelry portrait background - optimized sizing */
+  background-image: url('images/pic.jpg'), linear-gradient(135deg, #f9f6f1 0%, #ede6dd 50%, #e0d4c3 100%);
   background-size: cover, cover;
-  background-position: center 15%, center center;
+  background-position: center center, center center;
   background-repeat: no-repeat, no-repeat;
+  background-attachment: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,7 +112,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.18);
+  background: rgba(0, 0, 0, 0.2);
   mix-blend-mode: multiply;
 }
 
