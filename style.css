@@ -90,12 +90,11 @@ body {
 /* Hero Section */
 .hero {
   height: 600px;
-  /* Jewelry portrait background - optimized sizing */
+  /* Jewelry portrait background */
   background-image: url('images/pic.jpg'), linear-gradient(135deg, #f9f6f1 0%, #ede6dd 50%, #e0d4c3 100%);
   background-size: cover, cover;
-  background-position: center center, center center;
+  background-position: center 15%, center center;
   background-repeat: no-repeat, no-repeat;
-  background-attachment: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -112,7 +111,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.18);
   mix-blend-mode: multiply;
 }
 
@@ -124,7 +123,7 @@ body {
 .hero h1 {
   font-family: 'Playfair Display', serif;
   font-size: 4.25rem;
-  color: #2a2a2a;
+  color: #ffffff;
   letter-spacing: 1.5px;
   margin-bottom: 2rem;
   text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.06);
@@ -166,18 +165,18 @@ body {
 
 .btn-secondary {
   background-color: transparent;
-  color: #2a2a2a;
-  border: 2px solid #2a2a2a;
+  color: #f4d03f;
+  border: 2px solid #f4d03f;
   border-radius: 4px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
 }
 
 .btn-secondary:hover {
-  background-color: #2a2a2a;
-  color: #fff;
+  background-color: #f4d03f;
+  color: #2a2a2a;
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(42, 42, 42, 0.3);
+  box-shadow: 0 8px 20px rgba(244, 208, 63, 0.4);
 }
 
 /* Products Section */
