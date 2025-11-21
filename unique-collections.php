@@ -1,14 +1,17 @@
+<?php
+$pageTitle = 'Soumis Gems - Unique Collections';
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Soumis Gems - Unique Collections</title>
+    <title><?php echo $pageTitle; ?></title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body class="detail-page">
     <header class="detail-header">
-      <a class="detail-back" href="index.html">&#8592; Back to home</a>
+      <a class="detail-back" href="index.php">&#8592; Back to home</a>
       <h1>Unique Collections</h1>
       <p class="detail-tagline">
         Discover one-of-a-kind pieces that spotlight rare gems and artisan
@@ -43,7 +46,7 @@
     </main>
 
     <footer class="detail-footer">
-      <p>&copy; 2024 Soumis Gems. All rights reserved.</p>
+      <p>&copy; <?php echo date('Y'); ?> Soumis Gems. All rights reserved.</p>
     </footer>
   </body>
 </html>

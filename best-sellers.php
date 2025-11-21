@@ -1,14 +1,17 @@
+<?php
+$pageTitle = 'Soumis Gems - Best Sellers';
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Soumis Gems - Best Sellers</title>
+    <title><?php echo $pageTitle; ?></title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body class="detail-page">
     <header class="detail-header">
-      <a class="detail-back" href="index.html">&#8592; Back to home</a>
+      <a class="detail-back" href="index.php">&#8592; Back to home</a>
       <h1>Best Sellers</h1>
       <p class="detail-tagline">
         Pieces our clients love the most, tried and trusted for every occasion.
@@ -40,7 +43,7 @@
     </main>
 
     <footer class="detail-footer">
-      <p>&copy; 2024 Soumis Gems. All rights reserved.</p>
+      <p>&copy; <?php echo date('Y'); ?> Soumis Gems. All rights reserved.</p>
     </footer>
   </body>
 </html>

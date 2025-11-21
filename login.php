@@ -1,9 +1,12 @@
+<?php
+$pageTitle = 'Soumis Collections — Login';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Soumis Collections — Login</title>
+  <title><?php echo $pageTitle; ?></title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
@@ -14,8 +17,8 @@
     <div class="auth-container">
       <div class="logo">SOUMIS COLLECTIONS</div>
       <nav class="auth-nav">
-        <a href="/">Home</a>
-        <a href="/">Products</a>
+        <a href="index.php">Home</a>
+        <a href="index.php#products">Products</a>
       </nav>
     </div>
   </header>
@@ -25,7 +28,7 @@
       <h1>Welcome back</h1>
       <p class="muted">Sign in to continue to Soumis Collections</p>
 
-      <form class="auth-form" action="#" method="post">
+      <form class="auth-form" action="process-login.php" method="post">
         <label for="email">Email</label>
         <input id="email" name="email" type="email" required placeholder="you@example.com" />
 
@@ -48,13 +51,13 @@
           <button class="btn-social btn-apple" type="button">Continue with Apple</button>
         </div>
 
-        <p class="signup">Don't have an account? <a href="#">Create account</a></p>
+        <p class="signup">Don't have an account? <a href="signup.php">Create account</a></p>
       </form>
     </div>
   </main>
 
   <footer class="auth-footer">
-    <p>&copy; 2025 Soumis Collections</p>
+    <p>&copy; <?php echo date('Y'); ?> Soumis Collections</p>
   </footer>
 </body>
 </html>
