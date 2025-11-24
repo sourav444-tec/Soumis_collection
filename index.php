@@ -9,8 +9,8 @@ include 'includes/nav.php';
       <div class="hero-content">
         <h1>Stunning every Ear</h1>
         <div class="hero-buttons">
-          <button class="btn btn-primary">SHOP RETAIL</button>
-          <button class="btn btn-secondary">EXPLORE WHOLESALE</button>
+          <a class="btn btn-primary" href="#products">SHOP RETAIL</a>
+          <a class="btn btn-secondary" href="wholesale.php">EXPLORE WHOLESALE</a>
         </div>
       </div>
     </section>
