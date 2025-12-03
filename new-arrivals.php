@@ -14,7 +14,7 @@ $pageTitle = 'Soumis Gems - New Arrivals';
       <a class="detail-back" href="index.php">&#8592; Back to home</a>
       <h1>New Arrivals</h1>
       <p class="detail-tagline">
-        Fresh designs crafted for the latest trends in ethical jewelry.
+        Fresh designs crafted for the latest trends in ethical jewellery.
       </p>
     </header>
 

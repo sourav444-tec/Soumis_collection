@@ -45,10 +45,10 @@ $searchQuery = isset($_GET['q']) ? trim($_GET['q']) : '';
             ['name' => 'New Arrivals', 'description' => 'Explore our latest collection', 'url' => 'new-arrivals.php', 'keywords' => 'new latest fresh arrivals recent'],
             ['name' => 'Best Sellers', 'description' => 'Most loved pieces', 'url' => 'best-sellers.php', 'keywords' => 'best seller popular top trending favorite'],
             ['name' => 'Unique Collections', 'description' => 'Exclusive designs', 'url' => 'unique-collections.php', 'keywords' => 'unique exclusive special rare collection'],
-            ['name' => 'Festive Special', 'description' => 'Celebrate in style with festive jewelry', 'url' => '#', 'keywords' => 'festive special festival celebration occasion wedding party diwali christmas'],
+            ['name' => 'Festive Special', 'description' => 'Celebrate in style with festive jewellery', 'url' => '#', 'keywords' => 'festive special festival celebration occasion wedding party diwali christmas'],
             ['name' => 'Necklaces', 'description' => 'Elegant necklaces and chains', 'url' => '#', 'keywords' => 'necklace necklaces chain choker pendant collar'],
             ['name' => 'Bangles', 'description' => 'Beautiful wrist ornaments', 'url' => '#', 'keywords' => 'bangles bangle bracelet wrist kada arm ornament'],
-            ['name' => 'Silver Jewelry', 'description' => 'Classic silver designs', 'url' => '#', 'keywords' => 'silver metallic classic traditional'],
+            ['name' => 'Silver Jewellery', 'description' => 'Classic silver designs', 'url' => '#', 'keywords' => 'silver metallic classic traditional'],
           ];
 
           $searchLower = strtolower($searchQuery);

@@ -135,7 +135,7 @@ body {
 /* Hero Section */
 .hero {
   height: 600px;
-  /* Jewelry portrait background */
+  /* Jewellery portrait background */
   background-image: url('images/pic.jpg'), linear-gradient(135deg, #f9f6f1 0%, #ede6dd 50%, #e0d4c3 100%);
   background-size: cover, cover;
   background-position: center 15%, center center;
@@ -301,6 +301,11 @@ body {
   border-radius: 12px;
   background: white;
   overflow: hidden;
+}
+
+.product-card a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .product-card:focus {
