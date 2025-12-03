@@ -18,7 +18,7 @@ $isAdmin = !empty($_SESSION['is_admin']);
           <?php endif; ?>
         </ul>
         <div class="nav-icons">
-          <a href="#search" aria-label="Search">
+          <a href="search.php" aria-label="Search">
             <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
               <path d="M15.5 14h-.79l-.28-.27a6 6 0 1 0-.71.71l.27.28v.79l5 5 1.5-1.5-5-5zm-5.5 0a4 4 0 1 1 0-8 4 4 0 0 1 0 8z" />
             </svg>
