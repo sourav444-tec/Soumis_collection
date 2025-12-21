@@ -42,10 +42,10 @@ $userEmail = $_SESSION['user_email'] ?? '';
                   <p style="margin: 0; font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">Logged in as</p>
                   <p style="margin: 4px 0 0 0; font-size: 13px; color: #2a2a2a; font-weight: 600; word-break: break-all;"><?php echo htmlspecialchars($userEmail); ?></p>
                 </div>
-                <a href="#" style="display: block; padding: 12px 16px; color: #2a2a2a; text-decoration: none; font-size: 13px; border-bottom: 1px solid #f0f0f0; transition: background 0.2s;">👤 My Profile</a>
-                <a href="#" style="display: block; padding: 12px 16px; color: #2a2a2a; text-decoration: none; font-size: 13px; border-bottom: 1px solid #f0f0f0; transition: background 0.2s;">📦 My Orders</a>
-                <a href="#" style="display: block; padding: 12px 16px; color: #2a2a2a; text-decoration: none; font-size: 13px; border-bottom: 1px solid #f0f0f0; transition: background 0.2s;">❤️ Wishlist</a>
-                <a href="#" style="display: block; padding: 12px 16px; color: #2a2a2a; text-decoration: none; font-size: 13px; border-bottom: 1px solid #f0f0f0; transition: background 0.2s;">⚙️ Settings</a>
+                <a href="profile.php" style="display: block; padding: 12px 16px; color: #2a2a2a; text-decoration: none; font-size: 13px; border-bottom: 1px solid #f0f0f0; transition: background 0.2s;">👤 My Profile</a>
+                <a href="orders.php" style="display: block; padding: 12px 16px; color: #2a2a2a; text-decoration: none; font-size: 13px; border-bottom: 1px solid #f0f0f0; transition: background 0.2s;">📦 My Orders</a>
+                <a href="wishlist.php" style="display: block; padding: 12px 16px; color: #2a2a2a; text-decoration: none; font-size: 13px; border-bottom: 1px solid #f0f0f0; transition: background 0.2s;">❤️ Wishlist</a>
+                <a href="settings.php" style="display: block; padding: 12px 16px; color: #2a2a2a; text-decoration: none; font-size: 13px; border-bottom: 1px solid #f0f0f0; transition: background 0.2s;">⚙️ Settings</a>
                 <a href="admin/logout.php" style="display: block; padding: 12px 16px; color: #e74c3c; text-decoration: none; font-size: 13px; font-weight: 600; transition: background 0.2s;">🚪 Logout</a>
               <?php else: ?>
                 <!-- Not Logged In Menu -->
