@@ -8,38 +8,7 @@ $pageTitle = 'Admin Dashboard';
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><?php echo $pageTitle; ?></title>
-  <link rel="stylesheet" href="../style.css" />
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Playfair Display', Georgia, serif; background: #f7f5f2; }
-    .admin-header { background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); color: white; padding: 24px 32px; }
-    .admin-header h1 { font-size: 28px; letter-spacing: 2px; margin-bottom: 8px; }
-    .admin-header p { font-size: 14px; opacity: 0.9; }
-    .admin-nav { display: flex; gap: 16px; margin-top: 16px; }
-    .admin-nav a { color: #d4af37; text-decoration: none; font-weight: 600; transition: opacity 0.3s; }
-    .admin-nav a:hover { opacity: 0.8; }
-    .badge { display: inline-block; background: #d4af37; color: #2a2a2a; padding: 4px 12px; border-radius: 20px; font-size: 11px; letter-spacing: 1px; font-weight: 600; margin-left: 8px; }
-    .admin-container { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 32px; }
-    .stat-card { background: white; padding: 24px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); border-left: 4px solid #d4af37; }
-    .stat-card h3 { font-size: 14px; color: #7b776f; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
-    .stat-value { font-size: 32px; font-weight: 700; color: #2a2a2a; }
-    .admin-section { margin-bottom: 32px; }
-    .section-title { font-size: 20px; margin-bottom: 16px; color: #2a2a2a; letter-spacing: 1px; }
-    .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-    .admin-card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); border: 1px solid #e6e2dc; transition: transform 0.3s, box-shadow 0.3s; }
-    .admin-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12); }
-    .admin-card h3 { font-size: 18px; margin-bottom: 12px; color: #2a2a2a; }
-    .admin-card p { color: #7b776f; font-size: 14px; margin-bottom: 16px; line-height: 1.5; }
-    .admin-link { display: inline-block; background: linear-gradient(90deg, #d4af37, #e8c851); color: #2a2a2a; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 13px; transition: opacity 0.3s; }
-    .admin-link:hover { opacity: 0.9; }
-    .admin-link.secondary { background: #e6e2dc; color: #2a2a2a; }
-    pre { background: #f7f5f2; padding: 16px; border-radius: 8px; font-size: 12px; overflow: auto; border: 1px solid #e6e2dc; }
-    .feature-list { list-style: none; }
-    .feature-list li { padding: 8px 0; color: #555; border-bottom: 1px solid #f0ede8; }
-    .feature-list li:last-child { border-bottom: none; }
-    .feature-list li::before { content: "✓ "; color: #d4af37; font-weight: 700; margin-right: 8px; }
-  </style>
+  <link rel="stylesheet" href="admin.css" />
 </head>
 <body>
   <div class="admin-header">
@@ -96,7 +65,11 @@ $pageTitle = 'Admin Dashboard';
         <div class="admin-card">
           <h3>User Session Info</h3>
           <p>Current logged-in user session details and authentication status.</p>
-          <pre><?php echo htmlspecialchars(print_r(['user_id'=>substr($_SESSION['user_id'],0,8).'...','email'=>$_SESSION['user_email'],'is_admin'=>$_SESSION['is_admin']?'Yes':'No'],true)); ?></pre>
+          <div style="background: #f7f5f2; padding: 12px; border-radius: 6px; font-size: 12px; color: #555;">
+            <strong>User:</strong> <?php echo htmlspecialchars($_SESSION['user_email']); ?><br>
+            <strong>Admin:</strong> <?php echo $_SESSION['is_admin'] ? 'Yes' : 'No'; ?><br>
+            <strong>Session ID:</strong> <?php echo substr($_SESSION['user_id'], 0, 8) . '...'; ?>
+          </div>
         </div>
         <div class="admin-card">
           <h3>Site Management</h3>

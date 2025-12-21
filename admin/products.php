@@ -72,28 +72,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_name'])) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><?php echo $pageTitle; ?></title>
-  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="admin.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Playfair Display', Georgia, serif; background: #f7f5f2; }
-    .admin-header { background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); color: white; padding: 24px 32px; }
-    .admin-header h1 { font-size: 28px; letter-spacing: 2px; margin-bottom: 8px; }
-    .admin-header a { color: #d4af37; text-decoration: none; font-weight: 600; }
-    .admin-container { max-width: 1000px; margin: 0 auto; padding: 32px 24px; }
-    .form-section { background: white; padding: 28px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); margin-bottom: 24px; }
-    .section-title { font-size: 20px; margin-bottom: 20px; color: #2a2a2a; letter-spacing: 1px; }
-    .form-group { margin-bottom: 20px; }
-    label { display: block; font-size: 14px; color: #7b776f; margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-    input[type="text"],
-    input[type="number"],
-    textarea,
-    select { width: 100%; padding: 12px 14px; border: 1px solid #e6e2dc; border-radius: 8px; font-size: 14px; font-family: inherit; }
-    textarea { min-height: 100px; resize: vertical; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .form-row-three { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
-    .color-picker-wrapper { position: relative; }
-    .color-preview { display: inline-block; width: 50px; height: 50px; border-radius: 8px; border: 2px solid #e6e2dc; margin-top: 8px; cursor: pointer; }
     .photo-upload { border: 2px dashed #d4af37; border-radius: 8px; padding: 24px; text-align: center; cursor: pointer; transition: background 0.3s; }
     .photo-upload:hover { background: #faf8f5; }
     .photo-upload input[type="file"] { display: none; }
