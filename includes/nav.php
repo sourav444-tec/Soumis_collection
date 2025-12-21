@@ -11,9 +11,8 @@ $userEmail = $_SESSION['user_email'] ?? '';
         <div class="logo">SOUMIS COLLECTIONS</div>
         <ul class="nav-menu">
           <li><a href="index.php">Home</a></li>
-          <li><a href="#products">Products</a></li>
-          <li><a href="#earrings">Earrings</a></li>
-          <li><a href="#collections">Collections</a></li>
+          <li><a href="products.php">All Products</a></li>
+          <li><a href="new-arrivals.php">New Arrivals</a></li>
           <li><a href="wholesale.php">Wholesale</a></li>
           <?php if ($isAdmin): ?>
             <li><a href="admin/index.php">Admin</a></li>

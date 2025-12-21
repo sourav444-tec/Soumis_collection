@@ -52,14 +52,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['product_photo'])) {
 // Handle product save
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_name'])) {
   $productId = uniqid('prod_');
+  
+  // Handle image upload if provided
+  $imagePath = '';
+  if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] === UPLOAD_ERR_OK) {
+    $file = $_FILES['product_image'];
+    $uploadDir = __DIR__ . '/../images/products/';
+    
+    if (!is_dir($uploadDir)) {
+      mkdir($uploadDir, 0755, true);
+    }
+    
+    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (in_array($file['type'], $allowedTypes) && $file['size'] <= 5 * 1024 * 1024) {
+      $filename = $productId . '_' . preg_replace('/[^a-z0-9._-]/i', '_', basename($file['name']));
+      $uploadPath = $uploadDir . $filename;
+      
+      if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
+        $imagePath = 'images/products/' . $filename;
+      }
+    }
+  }
+  
   $_SESSION['products'][$productId] = [
     'id' => $productId,
     'name' => htmlspecialchars($_POST['product_name']),
     'description' => htmlspecialchars($_POST['product_description']),
+    'category' => htmlspecialchars($_POST['category']),
+    'sections' => isset($_POST['sections']) ? $_POST['sections'] : [],
     'retail_price' => floatval($_POST['retail_price']),
     'wholesale_price' => floatval($_POST['wholesale_price']),
     'stock' => intval($_POST['stock_quantity']),
     'colors' => $_POST['colors'],
+    'image' => $imagePath,
     'created' => date('Y-m-d H:i:s')
   ];
   header('Location: products.php?saved=1');
@@ -155,15 +180,66 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_name'])) {
     <!-- Product Details Section -->
     <div class="form-section">
       <h2 class="section-title">📝 Product Details</h2>
-      <form method="POST">
+      <form method="POST" enctype="multipart/form-data">
         <div class="form-group">
           <label for="product_name">Product Name</label>
-          <input type="text" id="product_name" name="product_name" placeholder="e.g., Silk Saree Collection" required />
+          <input type="text" id="product_name" name="product_name" placeholder="e.g., Golden Earrings" required />
         </div>
 
         <div class="form-group">
           <label for="product_description">Description</label>
           <textarea id="product_description" name="product_description" placeholder="Product description and details..."></textarea>
+        </div>
+
+        <!-- Product Image Upload -->
+        <div class="form-group">
+          <label for="product_image">Product Image</label>
+          <div class="photo-upload" onclick="document.getElementById('productImageInput').click()">
+            <input type="file" id="productImageInput" name="product_image" accept="image/*" onchange="previewProductImage(this)" />
+            <p class="photo-upload-label">📷 Click to upload product image</p>
+            <p style="font-size: 12px; color: #999; margin-top: 8px;">Max 5MB • JPEG, PNG, GIF, WebP</p>
+            <div class="photo-preview">
+              <img id="productImagePreview" style="display: none;" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Category Selection -->
+        <div class="form-group">
+          <label for="category">Product Category</label>
+          <select id="category" name="category" required style="padding: 12px; border: 1px solid #e6e2dc; border-radius: 8px; font-size: 14px; width: 100%;">
+            <option value="">Select category...</option>
+            <option value="earrings">💎 Earrings</option>
+            <option value="necklace">📿 Necklace</option>
+            <option value="bangles">⭕ Bangles</option>
+            <option value="rings">💍 Rings</option>
+            <option value="pendants">🔆 Pendants</option>
+            <option value="bracelets">🔗 Bracelets</option>
+            <option value="anklets">👣 Anklets</option>
+            <option value="nose-rings">👃 Nose Rings</option>
+          </select>
+        </div>
+
+        <!-- Section Selection (Where to Display) -->
+        <div class="form-group">
+          <label>Display in Sections</label>
+          <div style="background: #f7f5f2; padding: 16px; border-radius: 8px; border: 1px solid #e6e2dc;">
+            <p style="font-size: 12px; color: #7b776f; margin-bottom: 12px;">Select where this product should appear on the homepage:</p>
+            <div style="display: grid; gap: 12px;">
+              <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; background: white; padding: 12px; border-radius: 6px; border: 1px solid #e6e2dc;">
+                <input type="checkbox" name="sections[]" value="new-arrivals" style="width: 18px; height: 18px; cursor: pointer;" />
+                <span style="font-size: 14px; font-weight: 500;">🆕 New Arrivals</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; background: white; padding: 12px; border-radius: 6px; border: 1px solid #e6e2dc;">
+                <input type="checkbox" name="sections[]" value="best-sellers" style="width: 18px; height: 18px; cursor: pointer;" />
+                <span style="font-size: 14px; font-weight: 500;">🔥 Best Sellers</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; background: white; padding: 12px; border-radius: 6px; border: 1px solid #e6e2dc;">
+                <input type="checkbox" name="sections[]" value="unique-collections" style="width: 18px; height: 18px; cursor: pointer;" />
+                <span style="font-size: 14px; font-weight: 500;">✨ Unique Collections</span>
+              </label>
+            </div>
+          </div>
         </div>
 
         <!-- Color Selection Section -->
@@ -337,6 +413,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_name'])) {
     // Preview photo before upload
     function previewPhoto(input) {
       const preview = document.getElementById('photoPreview');
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    // Preview product image
+    function previewProductImage(input) {
+      const preview = document.getElementById('productImagePreview');
       if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {

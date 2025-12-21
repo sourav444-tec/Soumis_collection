@@ -40,6 +40,13 @@ include 'includes/nav.php';
           </a>
         </div>
       </div>
+      
+      <!-- View All Products Button -->
+      <div style="text-align: center; margin-top: 40px;">
+        <a href="products.php" class="btn btn-primary" style="padding: 14px 32px; font-size: 1rem;">
+          🛍️ View All Products
+        </a>
+      </div>
     </section>
 
     <!-- Tagline Section -->
