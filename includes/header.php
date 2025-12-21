@@ -10,5 +10,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="dark-mode.css" />
+    <script>
+      // Initialize dark mode from session/localStorage
+      (function() {
+        const theme = localStorage.getItem('theme') || 'light';
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark-mode-init');
+          document.body.classList.add('dark-mode');
+        }
+      })();
+    </script>
   </head>
   <body>

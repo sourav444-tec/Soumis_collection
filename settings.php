@@ -42,7 +42,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['settings']['language'] = htmlspecialchars($_POST['language']);
     $_SESSION['settings']['theme'] = htmlspecialchars($_POST['theme']);
     $_SESSION['settings']['currency'] = htmlspecialchars($_POST['currency']);
-    $successMessage = "Preferences updated!";
+    $successMessage = "Preferences updated! Theme changes will apply instantly.";
+    
+    // Apply theme change
+    if ($_SESSION['settings']['theme'] === 'dark') {
+      echo "<script>localStorage.setItem('theme', 'dark'); location.reload();</script>";
+    } else {
+      echo "<script>localStorage.setItem('theme', 'light'); location.reload();</script>";
+    }
   } elseif (isset($_POST['update_security'])) {
     $_SESSION['settings']['two_factor'] = isset($_POST['two_factor']);
     $successMessage = "Security settings updated!";
@@ -335,10 +342,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="form-group">
         <label for="language">Language</label>
         <select id="language" name="language">
-          <option value="English" <?php echo $settings['language'] === 'English' ? 'selected' : ''; ?>>English</option>
-          <option value="Hindi" <?php echo $settings['language'] === 'Hindi' ? 'selected' : ''; ?>>Hindi</option>
-          <option value="Gujarati" <?php echo $settings['language'] === 'Gujarati' ? 'selected' : ''; ?>>Gujarati</option>
-          <option value="Tamil" <?php echo $settings['language'] === 'Tamil' ? 'selected' : ''; ?>>Tamil</option>
+          <option value="English" <?php echo $settings['language'] === 'English' ? 'selected' : ''; ?>>🇬🇧 English</option>
+          <option value="Bengali" <?php echo $settings['language'] === 'Bengali' ? 'selected' : ''; ?>>🇧🇩 Bengali (বাংলা)</option>
+          <option value="Hindi" <?php echo $settings['language'] === 'Hindi' ? 'selected' : ''; ?>>🇮🇳 Hindi (हिंदी)</option>
+          <option value="Gujarati" <?php echo $settings['language'] === 'Gujarati' ? 'selected' : ''; ?>>🇮🇳 Gujarati (ગુજરાતી)</option>
+          <option value="Tamil" <?php echo $settings['language'] === 'Tamil' ? 'selected' : ''; ?>>🇮🇳 Tamil (தமிழ்)</option>
         </select>
       </div>
 
@@ -359,6 +367,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <option value="dark" <?php echo $settings['theme'] === 'dark' ? 'selected' : ''; ?>>🌙 Dark Mode</option>
           <option value="auto" <?php echo $settings['theme'] === 'auto' ? 'selected' : ''; ?>>⚙️ Auto (System)</option>
         </select>
+        <div class="info-box" style="margin-top: 12px;">
+          ℹ️ Dark mode reduces eye strain and saves battery life. Changes apply instantly across the website.
+        </div>
       </div>
 
       <button type="submit" name="update_preferences" class="save-btn">💾 Save Preferences</button>

@@ -1,0 +1,360 @@
+/* Dark Mode Stylesheet - Soumis Collections */
+
+:root {
+  --dm-bg-primary: #1a1a1a;
+  --dm-bg-secondary: #2d2d2d;
+  --dm-bg-tertiary: #3a3a3a;
+  --dm-text-primary: #e8e8e8;
+  --dm-text-secondary: #b0b0b0;
+  --dm-border: #404040;
+  --dm-accent: #d4af37;
+  --dm-card-bg: #252525;
+  --dm-hover: #333333;
+}
+
+/* Apply dark mode when enabled */
+body.dark-mode {
+  background-color: var(--dm-bg-primary);
+  color: var(--dm-text-primary);
+}
+
+body.dark-mode .navbar {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .nav-menu a,
+body.dark-mode .nav-menu li a {
+  color: var(--dm-text-primary);
+  transition: color 0.3s;
+}
+
+body.dark-mode .nav-menu a:hover {
+  color: var(--dm-accent);
+}
+
+body.dark-mode svg {
+  stroke: var(--dm-text-primary);
+  fill: var(--dm-text-primary);
+}
+
+body.dark-mode .hero {
+  background: linear-gradient(
+    135deg,
+    rgba(26, 26, 26, 0.8),
+    rgba(45, 45, 45, 0.8)
+  );
+}
+
+body.dark-mode .btn-primary,
+body.dark-mode .btn-secondary {
+  background: var(--dm-accent);
+  color: #1a1a1a;
+}
+
+body.dark-mode .btn-primary:hover,
+body.dark-mode .btn-secondary:hover {
+  opacity: 0.9;
+}
+
+body.dark-mode .product-card {
+  background: var(--dm-card-bg);
+  border-color: var(--dm-border);
+}
+
+body.dark-mode .product-card:hover {
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.2);
+}
+
+body.dark-mode .product-image {
+  background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
+}
+
+body.dark-mode .tagline-section {
+  background: var(--dm-bg-secondary);
+  color: var(--dm-text-primary);
+}
+
+body.dark-mode .tagline-section h2,
+body.dark-mode .about-section h2 {
+  color: var(--dm-accent);
+}
+
+body.dark-mode .about-section {
+  background: var(--dm-bg-secondary);
+  color: var(--dm-text-secondary);
+}
+
+body.dark-mode .about-content {
+  background: var(--dm-card-bg);
+  color: var(--dm-text-primary);
+  border: 1px solid var(--dm-border);
+}
+
+body.dark-mode footer {
+  background: var(--dm-bg-secondary);
+  color: var(--dm-text-secondary);
+  border-top: 1px solid var(--dm-border);
+}
+
+body.dark-mode footer a {
+  color: var(--dm-accent);
+}
+
+/* Dark mode for forms */
+body.dark-mode input[type="text"],
+body.dark-mode input[type="email"],
+body.dark-mode input[type="password"],
+body.dark-mode input[type="number"],
+body.dark-mode input[type="tel"],
+body.dark-mode textarea,
+body.dark-mode select {
+  background: var(--dm-bg-tertiary);
+  color: var(--dm-text-primary);
+  border-color: var(--dm-border);
+}
+
+body.dark-mode input:focus,
+body.dark-mode textarea:focus,
+body.dark-mode select:focus {
+  background: var(--dm-card-bg);
+  border-color: var(--dm-accent);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
+
+/* Dark mode for cards and sections */
+body.dark-mode .profile-section,
+body.dark-mode .settings-section,
+body.dark-mode .form-section,
+body.dark-mode .order-card,
+body.dark-mode .wishlist-item {
+  background: var(--dm-card-bg);
+  border-color: var(--dm-border);
+  color: var(--dm-text-primary);
+}
+
+body.dark-mode .stat-card,
+body.dark-mode .stat-item,
+body.dark-mode .stat-card,
+body.dark-mode .info-item,
+body.dark-mode .meta-item {
+  background: var(--dm-bg-tertiary);
+  border-color: var(--dm-border);
+  color: var(--dm-text-primary);
+}
+
+body.dark-mode .section-title,
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4 {
+  color: var(--dm-text-primary);
+  border-bottom-color: var(--dm-accent);
+}
+
+body.dark-mode .profile-display,
+body.dark-mode .item-list,
+body.dark-mode .price-group,
+body.dark-mode .color-list {
+  background: var(--dm-bg-tertiary);
+  border-left-color: var(--dm-accent);
+}
+
+/* Dark mode for alerts */
+body.dark-mode .alert.success {
+  background: rgba(76, 175, 80, 0.15);
+  border-color: #4caf50;
+  color: #81c784;
+}
+
+body.dark-mode .alert.error {
+  background: rgba(244, 67, 54, 0.15);
+  border-color: #f44336;
+  color: #ef5350;
+}
+
+body.dark-mode .alert.info {
+  background: rgba(33, 150, 243, 0.15);
+  border-color: #2196f3;
+  color: #64b5f6;
+}
+
+body.dark-mode .info-box {
+  background: rgba(33, 150, 243, 0.1);
+  border-color: #2196f3;
+  color: var(--dm-text-secondary);
+}
+
+/* Dark mode for dropdowns */
+body.dark-mode #user-dropdown {
+  background: var(--dm-card-bg);
+  border-color: var(--dm-border);
+}
+
+body.dark-mode #user-dropdown a {
+  color: var(--dm-text-primary);
+  border-bottom-color: var(--dm-border);
+}
+
+body.dark-mode #user-dropdown a:hover {
+  background: var(--dm-bg-tertiary);
+}
+
+/* Dark mode for tables */
+body.dark-mode table {
+  background: var(--dm-card-bg);
+}
+
+body.dark-mode thead {
+  background: var(--dm-bg-tertiary);
+}
+
+body.dark-mode th {
+  color: var(--dm-text-primary);
+  border-bottom-color: var(--dm-border);
+}
+
+body.dark-mode td {
+  color: var(--dm-text-secondary);
+  border-bottom-color: var(--dm-border);
+}
+
+body.dark-mode tr:hover td {
+  background: var(--dm-hover);
+}
+
+/* Dark mode for admin pages */
+body.dark-mode .admin-header {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+  color: var(--dm-text-primary);
+}
+
+body.dark-mode .admin-container {
+  background: transparent;
+}
+
+body.dark-mode .admin-card,
+body.dark-mode .stat-card {
+  background: var(--dm-card-bg);
+  border-color: var(--dm-border);
+}
+
+/* Dark mode toggle button */
+.theme-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: var(--dm-accent);
+  border: none;
+  border-radius: 50%;
+  color: #1a1a1a;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.3);
+}
+
+body.dark-mode .theme-toggle {
+  background: #f0ad4e;
+  color: #1a1a1a;
+}
+
+/* Smooth transitions */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* Dark mode for specific elements */
+body.dark-mode .header {
+  background: var(--dm-bg-secondary);
+  border-bottom: 1px solid var(--dm-border);
+}
+
+body.dark-mode .search-section {
+  background: var(--dm-bg-secondary);
+}
+
+body.dark-mode .filter-btn {
+  background: var(--dm-bg-tertiary);
+  color: var(--dm-text-primary);
+  border-color: var(--dm-border);
+}
+
+body.dark-mode .filter-btn.active {
+  background: var(--dm-accent);
+  color: #1a1a1a;
+}
+
+body.dark-mode .empty-state {
+  background: var(--dm-bg-secondary);
+  color: var(--dm-text-secondary);
+}
+
+body.dark-mode .order-header {
+  border-bottom-color: var(--dm-border);
+}
+
+/* Admin dashboard dark mode */
+body.dark-mode .stats-grid .stat-card {
+  background: var(--dm-card-bg);
+  border-left-color: var(--dm-accent);
+}
+
+body.dark-mode .admin-grid .admin-card {
+  background: var(--dm-card-bg);
+  border-color: var(--dm-border);
+}
+
+/* Ensure visibility of all text in dark mode */
+body.dark-mode label,
+body.dark-mode .info-label,
+body.dark-mode .setting-name,
+body.dark-mode .setting-description {
+  color: var(--dm-text-secondary);
+}
+
+body.dark-mode .setting-name {
+  color: var(--dm-text-primary);
+}
+
+/* Dark mode for login/signup pages */
+body.dark-mode .form-container {
+  background: var(--dm-card-bg);
+  border-color: var(--dm-border);
+}
+
+body.dark-mode .login-header,
+body.dark-mode .signup-header {
+  background: linear-gradient(
+    135deg,
+    var(--dm-bg-secondary) 0%,
+    var(--dm-bg-tertiary) 100%
+  );
+}
+
+/* Reduced motion for dark mode transitions */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
+
+/* Print styles remain unchanged */
+@media print {
+  body.dark-mode {
+    background: white;
+    color: black;
+  }
+}
