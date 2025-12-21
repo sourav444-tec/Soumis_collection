@@ -70,6 +70,46 @@ body.dark-mode .product-image {
   background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
 }
 
+/* Ensure images remain visible in dark mode */
+body.dark-mode img {
+  background: white;
+  padding: 2px;
+  border-radius: 4px;
+  opacity: 1;
+  filter: none;
+}
+
+/* Product images should have proper background */
+body.dark-mode .product-card img,
+body.dark-mode .item-image img,
+body.dark-mode .photo-preview img {
+  background: white;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+/* Hero and banner images - keep original appearance */
+body.dark-mode .hero img,
+body.dark-mode .banner img {
+  background: transparent;
+  padding: 0;
+  filter: brightness(0.9);
+}
+
+/* Logo images */
+body.dark-mode .logo img,
+body.dark-mode .brand-logo img {
+  background: transparent;
+  padding: 0;
+  filter: none;
+}
+
+/* Prevent images from becoming too dark */
+body.dark-mode img:not(.dark-mode-preserve) {
+  max-width: 100%;
+  height: auto;
+}
+
 body.dark-mode .tagline-section {
   background: var(--dm-bg-secondary);
   color: var(--dm-text-primary);
@@ -276,10 +316,40 @@ body.dark-mode .theme-toggle {
     border-color 0.3s ease;
 }
 
+/* Ensure images don't transition and remain visible */
+img {
+  transition: none !important;
+}
+
 /* Dark mode for specific elements */
 body.dark-mode .header {
   background: var(--dm-bg-secondary);
   border-bottom: 1px solid var(--dm-border);
+}
+
+/* Image containers and backgrounds */
+body.dark-mode .item-image {
+  background: white !important;
+  padding: 8px;
+  border: 2px solid var(--dm-border);
+}
+
+body.dark-mode .photo-upload {
+  background: var(--dm-bg-tertiary);
+  border-color: var(--dm-accent);
+}
+
+body.dark-mode .photo-preview {
+  background: white;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+/* Product image placeholders */
+body.dark-mode .product-image.new-arrivals,
+body.dark-mode .product-image.best-sellers,
+body.dark-mode .product-image.unique-collections {
+  filter: brightness(1.1) contrast(1.05);
 }
 
 body.dark-mode .search-section {
