@@ -173,7 +173,7 @@ soumis-collections/
 ### Product Management
 
 - Upload product photos
-- Set retail and wholesale prices
+- Set resail and wholesale prices
 - Manage inventory
 - Organize by colors and categories
 - Export product list

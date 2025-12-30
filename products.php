@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once 'db_config.php';
 $pageTitle = 'All Products - Soumis Gems';
 
 // Get filter parameters
@@ -8,8 +9,17 @@ $minPrice = isset($_GET['min_price']) ? floatval($_GET['min_price']) : 0;
 $maxPrice = isset($_GET['max_price']) ? floatval($_GET['max_price']) : 100000;
 $sortBy = isset($_GET['sort']) ? $_GET['sort'] : 'newest';
 
-// Get all products
-$allProducts = isset($_SESSION['products']) ? $_SESSION['products'] : [];
+// Get all products from database
+$sql = "SELECT * FROM products";
+$result = $conn->query($sql);
+$allProducts = [];
+if ($result) {
+  while ($row = $result->fetch_assoc()) {
+    $row['colors'] = json_decode($row['colors'], true) ?: [];
+    $row['sections'] = json_decode($row['sections'], true) ?: [];
+    $allProducts[] = $row;
+  }
+}
 
 // Filter products
 $filteredProducts = [];
@@ -350,7 +360,7 @@ include 'includes/nav.php';
     margin-bottom: 12px;
   }
   
-  .price-retail {
+  .price-resail {
     font-size: 1.3rem;
     font-weight: 700;
     color: #d4af37;
@@ -624,7 +634,7 @@ include 'includes/nav.php';
                 
                 <div class="product-item-price">
                   <div>
-                    <div class="price-retail">₹<?php echo number_format($product['retail_price'], 2); ?></div>
+                    <div class="price-resail">₹<?php echo number_format($product['retail_price'], 2); ?></div>
                     <div class="price-wholesale">Wholesale: ₹<?php echo number_format($product['wholesale_price'], 2); ?></div>
                   </div>
                 </div>

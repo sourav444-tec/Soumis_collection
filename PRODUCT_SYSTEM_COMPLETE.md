@@ -57,7 +57,7 @@
   - Category badges
   - Color swatches
   - Stock status (In Stock/Low Stock/Out of Stock)
-  - Retail & wholesale prices
+  - Resail & wholesale prices
   - Add to Cart button
 
 #### 2. **Category Pages Updated**
@@ -176,7 +176,7 @@ dark-mode.css ✅ Compatible with all new pages
 4. Select category (required)
 5. Check sections where product should appear
 6. Choose colors from palette or custom picker
-7. Set retail and wholesale prices
+7. Set resail and wholesale prices
 8. Set stock quantity
 9. Save product
 

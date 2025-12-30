@@ -1,21 +1,19 @@
 <?php
 session_start();
+require_once 'db_config.php';
 $pageTitle = 'New Arrivals - Soumis Gems';
 
-// Get products in new arrivals section
-$allProducts = isset($_SESSION['products']) ? $_SESSION['products'] : [];
+// Get products in new arrivals section from database
+$sql = "SELECT * FROM products WHERE JSON_CONTAINS(sections, '\"new-arrivals\"') ORDER BY created_at DESC";
+$result = $conn->query($sql);
 $newArrivals = [];
-
-foreach ($allProducts as $product) {
-  if (isset($product['sections']) && in_array('new-arrivals', $product['sections'])) {
-    $newArrivals[] = $product;
+if ($result) {
+  while ($row = $result->fetch_assoc()) {
+    $row['colors'] = json_decode($row['colors'], true) ?: [];
+    $row['sections'] = json_decode($row['sections'], true) ?: [];
+    $newArrivals[] = $row;
   }
 }
-
-// Sort by newest first
-usort($newArrivals, function($a, $b) {
-  return strcmp($b['created'], $a['created']);
-});
 
 include 'includes/header.php';
 include 'includes/nav.php';

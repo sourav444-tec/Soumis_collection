@@ -1,17 +1,15 @@
 <?php
 require_once __DIR__ . '/_auth.php';
+require_once __DIR__ . '/../db_config.php';
 $pageTitle = 'Product Management';
-
-// Initialize products in session
-if (!isset($_SESSION['products'])) {
-  $_SESSION['products'] = [];
-}
 
 // Handle delete product
 if (isset($_GET['delete'])) {
   $productId = $_GET['delete'];
-  if (isset($_SESSION['products'][$productId])) {
-    unset($_SESSION['products'][$productId]);
+  $sql = "DELETE FROM products WHERE id = ?";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param('s', $productId);
+  if ($stmt->execute()) {
     header('Location: products.php?deleted=1');
     exit;
   }
@@ -74,21 +72,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_name'])) {
     }
   }
   
-  $_SESSION['products'][$productId] = [
-    'id' => $productId,
-    'name' => htmlspecialchars($_POST['product_name']),
-    'description' => htmlspecialchars($_POST['product_description']),
-    'category' => htmlspecialchars($_POST['category']),
-    'sections' => isset($_POST['sections']) ? $_POST['sections'] : [],
-    'retail_price' => floatval($_POST['retail_price']),
-    'wholesale_price' => floatval($_POST['wholesale_price']),
-    'stock' => intval($_POST['stock_quantity']),
-    'colors' => $_POST['colors'],
-    'image' => $imagePath,
-    'created' => date('Y-m-d H:i:s')
-  ];
-  header('Location: products.php?saved=1');
-  exit;
+  // Prepare data
+  $name = htmlspecialchars($_POST['product_name']);
+  $description = htmlspecialchars($_POST['product_description']);
+  $category = htmlspecialchars($_POST['category']);
+  $sections = json_encode(isset($_POST['sections']) ? $_POST['sections'] : []);
+  $retail_price = floatval($_POST['retail_price']);
+  $wholesale_price = floatval($_POST['wholesale_price']);
+  $stock = intval($_POST['stock_quantity']);
+  $colors = json_encode($_POST['colors']);
+  
+  // Save to database
+  $sql = "INSERT INTO products (id, name, description, category, sections, retail_price, wholesale_price, stock, colors, image) 
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param('sssssddiss', $productId, $name, $description, $category, $sections, $retail_price, $wholesale_price, $stock, $colors, $imagePath);
+  
+  if ($stmt->execute()) {
+    header('Location: products.php?saved=1');
+    exit;
+  } else {
+    $uploadError = "Failed to save product: " . $stmt->error;
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -338,14 +343,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_name'])) {
 
     <!-- Products List Section -->
     <div class="form-section">
-      <h2 class="section-title">📦 Saved Products (<?php echo count($_SESSION['products']); ?>)</h2>
-      <?php if (empty($_SESSION['products'])): ?>
+      <?php
+        // Fetch products from database
+        $products = [];
+        $result = $conn->query("SELECT * FROM products ORDER BY created_at DESC");
+        if ($result) {
+          while ($row = $result->fetch_assoc()) {
+            $products[] = $row;
+          }
+        }
+      ?>
+      <h2 class="section-title">📦 Saved Products (<?php echo count($products); ?>)</h2>
+      <?php if (empty($products)): ?>
         <p style="color: #7b776f; font-size: 14px; text-align: center; padding: 40px 20px;">
           No products added yet. Create your first product above!
         </p>
       <?php else: ?>
         <div style="display: grid; gap: 16px;">
-          <?php foreach ($_SESSION['products'] as $productId => $product): 
+          <?php foreach ($products as $product): 
             $colors = json_decode($product['colors'], true) ?: [];
           ?>
             <div style="background: #f7f5f2; padding: 16px; border-radius: 8px; border: 1px solid #e6e2dc; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: start;">

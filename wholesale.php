@@ -73,6 +73,21 @@ $pageTitle = 'Soumis Collections — Wholesale';
       <?php endif; ?>
       
       <form action="process-wholesale.php" method="post" style="display: grid; gap: 20px;">
+        <?php if (isset($_GET['status']) && $_GET['status']==='error'): ?>
+          <?php 
+            $errorMsg = 'Please fill all required fields.';
+            if (isset($_GET['message'])) {
+              if ($_GET['message'] === 'minimum_products') {
+                $errorMsg = 'Minimum 6 products required per order.';
+              } elseif ($_GET['message'] === 'minimum_amount') {
+                $errorMsg = 'Minimum purchase amount is ₹500.';
+              }
+            }
+          ?>
+          <div style="background: #ffebee; color: #c62828; padding: 14px 16px; border-radius: 8px; border: 1px solid #ef5350;">
+            ✗ Error: <?php echo $errorMsg; ?>
+          </div>
+        <?php endif; ?>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
           <div>
             <label for="company" style="display: block; font-size: 13px; margin-bottom: 6px; color: #7b776f; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Company Name</label>
@@ -110,9 +125,17 @@ $pageTitle = 'Soumis Collections — Wholesale';
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
           <div>
             <label for="quantity" style="display: block; font-size: 13px; margin-bottom: 6px; color: #7b776f; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Order Quantity (units)</label>
-            <input id="quantity" name="quantity" type="number" min="10" step="1" required placeholder="Minimum 10 units" style="width: 100%; padding: 12px 14px; border: 1px solid #e6e2dc; border-radius: 8px; font-size: 14px;" />
-            <small style="color: #999; font-size: 12px; display: block; margin-top: 4px;">Starter: 10+ | Professional: 50+ | Enterprise: 200+</small>
+            <input id="quantity" name="quantity" type="number" min="6" step="1" required placeholder="Minimum 6 products" style="width: 100%; padding: 12px 14px; border: 1px solid #e6e2dc; border-radius: 8px; font-size: 14px;" />
+            <small style="color: #999; font-size: 12px; display: block; margin-top: 4px;">Minimum 6 products required | Starter: 10+ | Professional: 50+ | Enterprise: 200+</small>
           </div>
+          <div>
+            <label for="purchase_amount" style="display: block; font-size: 13px; margin-bottom: 6px; color: #7b776f; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Minimum Purchase Amount (₹)</label>
+            <input id="purchase_amount" name="purchase_amount" type="number" min="500" step="1" required placeholder="Minimum ₹500" style="width: 100%; padding: 12px 14px; border: 1px solid #e6e2dc; border-radius: 8px; font-size: 14px;" />
+            <small style="color: #999; font-size: 12px; display: block; margin-top: 4px;">Minimum purchase value: ₹500</small>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
           <div>
             <label for="price_tier" style="display: block; font-size: 13px; margin-bottom: 6px; color: #7b776f; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Applicable Discount</label>
             <select id="price_tier" name="price_tier" style="width: 100%; padding: 12px 14px; border: 1px solid #e6e2dc; border-radius: 8px; font-size: 14px; background: #f7f5f2;" disabled>
@@ -146,12 +169,12 @@ $pageTitle = 'Soumis Collections — Wholesale';
       <h2 style="margin-bottom: 16px;">✨ Why Choose Wholesale with Us?</h2>
       <ul style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; list-style: none; padding: 0;">
         <li style="background: #f7f5f2; padding: 16px; border-radius: 8px; border-left: 4px solid #d4af37;">
-          <strong style="color: #d4af37;">📦 Minimum Order Quantities</strong>
-          <p style="font-size: 13px; color: #555; margin-top: 6px;">Start with just 10 units and scale up with tiered discounts.</p>
+          <strong style="color: #d4af37;">📦 Minimum Order Requirements</strong>
+          <p style="font-size: 13px; color: #555; margin-top: 6px;">Minimum 6 products with ₹500 purchase value. Scale up for tiered discounts.</p>
         </li>
         <li style="background: #f7f5f2; padding: 16px; border-radius: 8px; border-left: 4px solid #d4af37;">
           <strong style="color: #d4af37;">🚚 Fast Fulfillment</strong>
-          <p style="font-size: 13px; color: #555; margin-top: 6px;">Quick shipping with dedicated logistics support.</p>
+          <p style="font-size: 13px; color: #555; margin-top: 6px;">Quick shipping with dedicated resail option and section support.</p>
         </li>
         <li style="background: #f7f5f2; padding: 16px; border-radius: 8px; border-left: 4px solid #d4af37;">
           <strong style="color: #d4af37;">💳 Flexible Payment</strong>
@@ -178,7 +201,7 @@ $pageTitle = 'Soumis Collections — Wholesale';
       <div style="display: grid; gap: 16px;">
         <div>
           <h4 style="color: #d4af37; margin-bottom: 6px;">What is the minimum order quantity?</h4>
-          <p style="color: #555; font-size: 13px; margin: 0;">Minimum orders start at 10 units for the Starter tier. Larger orders unlock better discounts.</p>
+          <p style="color: #555; font-size: 13px; margin: 0;">Minimum 6 products per order. For tiered pricing: Starter 10+ units, Professional 50+ units, Enterprise 200+ units. Minimum purchase value is ₹500.</p>
         </div>
         <div>
           <h4 style="color: #d4af37; margin-bottom: 6px;">How long does delivery take?</h4>

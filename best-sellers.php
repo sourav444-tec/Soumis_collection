@@ -1,21 +1,19 @@
 <?php
 session_start();
+require_once 'db_config.php';
 $pageTitle = 'Best Sellers - Soumis Gems';
 
-// Get products in best sellers section
-$allProducts = isset($_SESSION['products']) ? $_SESSION['products'] : [];
+// Get products in best sellers section from database
+$sql = "SELECT * FROM products WHERE JSON_CONTAINS(sections, '\"best-sellers\"') ORDER BY retail_price DESC";
+$result = $conn->query($sql);
 $bestSellers = [];
-
-foreach ($allProducts as $product) {
-  if (isset($product['sections']) && in_array('best-sellers', $product['sections'])) {
-    $bestSellers[] = $product;
+if ($result) {
+  while ($row = $result->fetch_assoc()) {
+    $row['colors'] = json_decode($row['colors'], true) ?: [];
+    $row['sections'] = json_decode($row['sections'], true) ?: [];
+    $bestSellers[] = $row;
   }
 }
-
-// Sort by price (highest first as best sellers)
-usort($bestSellers, function($a, $b) {
-  return $b['retail_price'] - $a['retail_price'];
-});
 
 include 'includes/header.php';
 include 'includes/nav.php';

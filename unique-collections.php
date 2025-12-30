@@ -1,14 +1,17 @@
 <?php
 session_start();
+require_once 'db_config.php';
 $pageTitle = 'Unique Collections - Soumis Gems';
 
-// Get products in unique collections section
-$allProducts = isset($_SESSION['products']) ? $_SESSION['products'] : [];
+// Get products in unique collections section from database
+$sql = "SELECT * FROM products WHERE JSON_CONTAINS(sections, '\"unique-collections\"') ORDER BY created_at DESC";
+$result = $conn->query($sql);
 $uniqueCollections = [];
-
-foreach ($allProducts as $product) {
-  if (isset($product['sections']) && in_array('unique-collections', $product['sections'])) {
-    $uniqueCollections[] = $product;
+if ($result) {
+  while ($row = $result->fetch_assoc()) {
+    $row['colors'] = json_decode($row['colors'], true) ?: [];
+    $row['sections'] = json_decode($row['sections'], true) ?: [];
+    $uniqueCollections[] = $row;
   }
 }
 

@@ -23,7 +23,7 @@ Soumis Collections is a modern, full-featured e-commerce platform specializing i
   - 🆕 New Arrivals
   - 🔥 Best Sellers
   - ✨ Unique Collections
-- **Product Details**: View images, colors, pricing (retail & wholesale), and stock availability
+- **Product Details**: View images, colors, pricing (resail & wholesale), and stock availability
 - **User Authentication**: Secure login/signup with OTP support
 - **User Dashboard**: Profile management, order tracking, wishlist
 - **Dark Mode**: Toggle between light and dark themes
@@ -40,7 +40,7 @@ Soumis Collections is a modern, full-featured e-commerce platform specializing i
   - Category assignment (8 categories)
   - Section assignment (3 display sections)
   - Color palette picker (20+ preset colors + custom)
-  - Retail & wholesale pricing
+  - Resail & wholesale pricing
   - Stock management
 - **Stock Alerts**: Automatic low stock and out-of-stock warnings
 - **Recent Products**: Track latest additions
@@ -199,7 +199,7 @@ Soumis_collection/
 
 1. **Add Product**: Upload image, set details, assign category/sections
 2. **Color Selection**: Choose from 20+ preset colors or create custom
-3. **Pricing**: Set retail and wholesale prices
+3. **Pricing**: Set resail and wholesale prices
 4. **Stock Tracking**: Monitor inventory levels
 5. **Multi-Section Display**: Show products in multiple locations
 

@@ -1,16 +1,17 @@
 <?php
 session_start();
+require_once 'db_config.php';
 $pageTitle = 'Earring Collection - Soumis Gems';
 
-// Get products in earring collection
-$allProducts = isset($_SESSION['products']) ? $_SESSION['products'] : [];
+// Get earring products from database
+$sql = "SELECT * FROM products WHERE JSON_CONTAINS(sections, '\"earring-collection\"') OR category = 'earrings' ORDER BY created_at DESC";
+$result = $conn->query($sql);
 $earringProducts = [];
-
-foreach ($allProducts as $product) {
-  // Show products that are in earring collection section OR are earrings category
-  if ((isset($product['sections']) && in_array('earring-collection', $product['sections'])) || 
-      $product['category'] === 'earrings') {
-    $earringProducts[] = $product;
+if ($result) {
+  while ($row = $result->fetch_assoc()) {
+    $row['colors'] = json_decode($row['colors'], true) ?: [];
+    $row['sections'] = json_decode($row['sections'], true) ?: [];
+    $earringProducts[] = $row;
   }
 }
 

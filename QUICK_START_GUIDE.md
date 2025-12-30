@@ -48,7 +48,7 @@
 
 6. **Set Prices**
 
-   - Retail Price: Customer price
+   - Resail Price: Customer price
    - Wholesale Price: Bulk buyer price
 
 7. **Set Stock Quantity**
