@@ -69,4 +69,37 @@ function escapeString($string) {
   global $conn;
   return $conn->real_escape_string($string);
 }
+
+// ===== PRICE CALCULATION FUNCTIONS =====
+
+/**
+ * Calculate wholesale price from retail price
+ * Wholesale = 50% off retail (wholesale = retail * 0.5)
+ */
+function calculateWholesalePrice($retail_price) {
+  return round($retail_price * 0.5, 2);
+}
+
+/**
+ * Calculate retail price from wholesale price
+ * Retail = wholesale / 0.5 (or wholesale * 2)
+ */
+function calculateRetailPrice($wholesale_price) {
+  return round($wholesale_price * 2, 2);
+}
+
+/**
+ * Get discount percentage between wholesale and retail
+ */
+function getDiscountPercentage($retail_price, $wholesale_price) {
+  if ($retail_price <= 0) return 0;
+  return round(((($retail_price - $wholesale_price) / $retail_price) * 100), 2);
+}
+
+/**
+ * Format price in Indian Rupees
+ */
+function formatPrice($price) {
+  return '₹' . number_format($price, 2);
+}
 ?>

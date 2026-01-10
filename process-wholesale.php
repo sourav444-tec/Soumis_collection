@@ -32,6 +32,26 @@ if ($purchase_amount < 500) {
   exit;
 }
 
+// Get wholesale pricing tier based on quantity
+$tier = 'starter';
+$discount_percent = 10;
+
+if ($quantity >= 200) {
+  $tier = 'enterprise';
+  $discount_percent = 30;
+} elseif ($quantity >= 50) {
+  $tier = 'professional';
+  $discount_percent = 20;
+}
+
+// Calculate effective wholesale price with tier discount
+// Base wholesale price is 50% of retail, then apply tier discount
+// Final price = purchase_amount * (1 - discount_percent/100)
+$calculated_price = $purchase_amount * (1 - ($discount_percent / 100));
+
+// Log order details for tracking
+$order_timestamp = date('Y-m-d H:i:s');
+
 // Save to database
 $sql = "INSERT INTO wholesale_applications (company_name, contact_name, email, phone, product_interest, order_quantity, purchase_amount, message, status) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')";
@@ -39,6 +59,7 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param('ssssisds', $company, $contact, $email, $phone, $product_interest, $quantity, $purchase_amount, $message);
 
 if ($stmt->execute()) {
+  // Successfully saved - redirect with success message
   header('Location: wholesale.php?order_status=success');
   exit;
 } else {

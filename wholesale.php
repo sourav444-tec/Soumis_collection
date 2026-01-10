@@ -1,6 +1,16 @@
 <?php
 session_start();
+require_once 'db_config.php';
 $pageTitle = 'Soumis Collections — Wholesale';
+
+// Get all products for wholesale pricing display
+$products = [];
+$result = $conn->query("SELECT id, name, retail_price, wholesale_price FROM products ORDER BY name ASC");
+if ($result) {
+  while ($row = $result->fetch_assoc()) {
+    $products[] = $row;
+  }
+}
 ?>
 <?php include 'includes/header.php'; ?>
 <?php include 'includes/nav.php'; ?>
@@ -62,6 +72,60 @@ $pageTitle = 'Soumis Collections — Wholesale';
         </div>
       </div>
     </div>
+
+    <!-- Product Pricing Table -->
+    <?php if (!empty($products)): ?>
+    <div class="detail-section" style="background: white; padding: 28px; border-radius: 12px; border: 1px solid #e6e2dc; margin-bottom: 28px;">
+      <h2 style="margin-bottom: 20px;">📊 Current Product Pricing</h2>
+      <p style="color: #7b776f; font-size: 13px; margin-bottom: 20px;">Wholesale prices are automatically calculated at <strong>50% off retail price</strong>. Below are our current products with their pricing:</p>
+      
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+          <thead>
+            <tr style="background: #f7f5f2; border-bottom: 2px solid #e6e2dc;">
+              <th style="padding: 12px; text-align: left; color: #2a2a2a; font-weight: 600;">Product Name</th>
+              <th style="padding: 12px; text-align: right; color: #2a2a2a; font-weight: 600;">Retail Price</th>
+              <th style="padding: 12px; text-align: right; color: #2a2a2a; font-weight: 600;">Wholesale Price</th>
+              <th style="padding: 12px; text-align: right; color: #2a2a2a; font-weight: 600;">You Save</th>
+              <th style="padding: 12px; text-align: center; color: #2a2a2a; font-weight: 600;">Discount %</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($products as $product): 
+              $discount_amount = $product['retail_price'] - $product['wholesale_price'];
+              $discount_pct = ($discount_amount / $product['retail_price']) * 100;
+            ?>
+            <tr style="border-bottom: 1px solid #e6e2dc;">
+              <td style="padding: 12px; color: #2a2a2a;">
+                <strong><?php echo htmlspecialchars($product['name']); ?></strong>
+              </td>
+              <td style="padding: 12px; text-align: right; color: #7b776f;">
+                ₹<?php echo number_format($product['retail_price'], 2); ?>
+              </td>
+              <td style="padding: 12px; text-align: right; color: #4caf50; font-weight: 600;">
+                ₹<?php echo number_format($product['wholesale_price'], 2); ?>
+              </td>
+              <td style="padding: 12px; text-align: right; color: #d4af37; font-weight: 600;">
+                ₹<?php echo number_format($discount_amount, 2); ?>
+              </td>
+              <td style="padding: 12px; text-align: center;">
+                <span style="background: #fff3cd; color: #856404; padding: 4px 8px; border-radius: 4px; font-weight: 600;">
+                  <?php echo round($discount_pct, 1); ?>%
+                </span>
+              </td>
+            </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+      
+      <div style="background: #e8f5e9; padding: 14px 16px; border-radius: 8px; border-left: 4px solid #4caf50; margin-top: 20px;">
+        <p style="margin: 0; color: #2e7d32; font-size: 13px;">
+          <strong>💡 How it works:</strong> All wholesale prices are automatically calculated at <strong>50% off the retail price</strong>. When you order in bulk (10+ units), you get even better rates depending on your tier!
+        </p>
+      </div>
+    </div>
+    <?php endif; ?>
 
     <!-- Bulk Order Form Section -->
     <div class="detail-section" style="background: white; padding: 28px; border-radius: 12px; border: 1px solid #e6e2dc;">

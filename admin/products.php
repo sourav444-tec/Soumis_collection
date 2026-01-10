@@ -319,15 +319,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_name'])) {
         <!-- Pricing Section -->
         <div class="form-group">
           <label>Pricing</label>
+          <div style="background: #faf8f5; padding: 16px; border-radius: 8px; border: 1px solid #d4af37; margin-bottom: 12px;">
+            <p style="font-size: 12px; color: #666; margin: 0 0 12px 0;">💡 <strong>Auto-Calculation:</strong> Wholesale price will be automatically set to 50% of the retail price. You can also enter wholesale first, and retail will be auto-calculated (2x wholesale).</p>
+          </div>
           <div class="pricing-section">
             <div class="price-group">
               <label for="retail_price">💎 Retail Price (per unit)</label>
-              <input type="number" id="retail_price" name="retail_price" placeholder="e.g., 2999" step="0.01" required />
+              <input type="number" id="retail_price" name="retail_price" placeholder="e.g., 2999" step="0.01" required oninput="calculateWholesaleFromRetail()" />
+              <small style="color: #999; font-size: 12px; margin-top: 4px;">Price for regular customers</small>
             </div>
             <div class="price-group">
               <label for="wholesale_price">🏪 Wholesale Price (per unit)</label>
-              <input type="number" id="wholesale_price" name="wholesale_price" placeholder="e.g., 1499" step="0.01" required />
+              <input type="number" id="wholesale_price" name="wholesale_price" placeholder="e.g., 1499" step="0.01" required oninput="calculateRetailFromWholesale()" />
+              <small style="color: #999; font-size: 12px; margin-top: 4px;">Price for bulk/wholesale buyers (50% off retail)</small>
             </div>
+          </div>
+          <div style="background: #e8f5e9; padding: 12px; border-radius: 6px; border-left: 4px solid #4caf50; margin-top: 12px;">
+            <p style="font-size: 12px; color: #2e7d32; margin: 0;">
+              <strong>Discount:</strong> <span id="discount-percentage">-</span>% off (saves ₹<span id="discount-amount">-</span>)
+            </p>
           </div>
         </div>
 
@@ -500,6 +510,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_name'])) {
     function editProduct(productId) {
       alert('Edit functionality coming soon!\nProduct ID: ' + productId);
       // Future: window.location.href = 'edit-product.php?id=' + productId;
+    }
+
+    // ===== PRICE CALCULATION FUNCTIONS =====
+    // Wholesale = 50% of Retail (Retail * 0.5)
+    // Retail = 2x Wholesale (Wholesale * 2)
+    
+    function calculateWholesaleFromRetail() {
+      const retailInput = document.getElementById('retail_price');
+      const wholesaleInput = document.getElementById('wholesale_price');
+      const retailPrice = parseFloat(retailInput.value);
+      
+      if (!isNaN(retailPrice) && retailPrice > 0) {
+        const wholesalePrice = (retailPrice * 0.5).toFixed(2);
+        wholesaleInput.value = wholesalePrice;
+        updateDiscountDisplay();
+      }
+    }
+    
+    function calculateRetailFromWholesale() {
+      const wholesaleInput = document.getElementById('wholesale_price');
+      const retailInput = document.getElementById('retail_price');
+      const wholesalePrice = parseFloat(wholesaleInput.value);
+      
+      if (!isNaN(wholesalePrice) && wholesalePrice > 0) {
+        const retailPrice = (wholesalePrice * 2).toFixed(2);
+        retailInput.value = retailPrice;
+        updateDiscountDisplay();
+      }
+    }
+    
+    function updateDiscountDisplay() {
+      const retailPrice = parseFloat(document.getElementById('retail_price').value) || 0;
+      const wholesalePrice = parseFloat(document.getElementById('wholesale_price').value) || 0;
+      
+      if (retailPrice > 0 && wholesalePrice > 0) {
+        const discountAmount = (retailPrice - wholesalePrice).toFixed(2);
+        const discountPercentage = ((discountAmount / retailPrice) * 100).toFixed(2);
+        
+        document.getElementById('discount-amount').textContent = discountAmount;
+        document.getElementById('discount-percentage').textContent = discountPercentage;
+      } else {
+        document.getElementById('discount-amount').textContent = '-';
+        document.getElementById('discount-percentage').textContent = '-';
+      }
     }
 
     // Drag and drop for photo upload

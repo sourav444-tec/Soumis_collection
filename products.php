@@ -635,7 +635,12 @@ include 'includes/nav.php';
                 <div class="product-item-price">
                   <div>
                     <div class="price-resail">₹<?php echo number_format($product['retail_price'], 2); ?></div>
-                    <div class="price-wholesale">Wholesale: ₹<?php echo number_format($product['wholesale_price'], 2); ?></div>
+                    <div class="price-wholesale" style="color: #4caf50; font-weight: 600; font-size: 0.9rem;">
+                      Wholesale: ₹<?php echo number_format($product['wholesale_price'], 2); ?> 
+                      <span style="background: #fff3cd; color: #856404; padding: 2px 6px; border-radius: 3px; font-size: 0.8rem; margin-left: 4px;">
+                        -<?php echo round(((($product['retail_price'] - $product['wholesale_price']) / $product['retail_price']) * 100), 0); ?>%
+                      </span>
+                    </div>
                   </div>
                 </div>
                 
