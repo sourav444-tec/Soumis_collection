@@ -41,9 +41,15 @@ $pageTitle = 'Soumis Collections — Create Account';
         <label for="email">Email</label>
         <input id="email" name="email" type="email" required placeholder="you@example.com" />
         <label for="password">Password</label>
-        <input id="password" name="password" type="password" required placeholder="Create a password" />
+        <div class="password-wrapper">
+          <input id="password" name="password" type="password" required placeholder="Create a password" />
+          <button type="button" class="password-toggle-btn" id="password-toggle" title="Show/hide password">👁️</button>
+        </div>
         <label for="password_confirm">Confirm Password</label>
-        <input id="password_confirm" name="password_confirm" type="password" required placeholder="Repeat password" />
+        <div class="password-wrapper">
+          <input id="password_confirm" name="password_confirm" type="password" required placeholder="Repeat password" />
+          <button type="button" class="password-toggle-btn" id="password-confirm-toggle" title="Show/hide password">👁️</button>
+        </div>
         <div style="margin-top:12px;font-size:12px;color:#7b776f;line-height:1.4">By creating an account you agree to our <a href="#" style="color:var(--accent);text-decoration:none">Terms</a> &amp; <a href="#" style="color:var(--accent);text-decoration:none">Privacy</a>.</div>
         <button class="btn-primary" type="submit" style="margin-top:16px">Create Account</button>
         <p class="signup" style="margin-top:18px">Already have an account? <a href="login.php">Sign In</a></p>
@@ -54,5 +60,31 @@ $pageTitle = 'Soumis Collections — Create Account';
   <footer class="auth-footer">
     <p>&copy; <?php echo date('Y'); ?> Soumis Collections</p>
   </footer>
-</body>
-</html>
+
+  <script>
+    // Password visibility toggle
+    document.addEventListener('DOMContentLoaded', () => {
+      const passwordToggle = document.getElementById('password-toggle');
+      const passwordInput = document.getElementById('password');
+      const passwordConfirmToggle = document.getElementById('password-confirm-toggle');
+      const passwordConfirmInput = document.getElementById('password_confirm');
+
+      if (passwordToggle && passwordInput) {
+        passwordToggle.addEventListener('click', (e) => {
+          e.preventDefault();
+          const isPassword = passwordInput.type === 'password';
+          passwordInput.type = isPassword ? 'text' : 'password';
+          passwordToggle.textContent = isPassword ? '👁️‍🗨️' : '👁️';
+        });
+      }
+
+      if (passwordConfirmToggle && passwordConfirmInput) {
+        passwordConfirmToggle.addEventListener('click', (e) => {
+          e.preventDefault();
+          const isPassword = passwordConfirmInput.type === 'password';
+          passwordConfirmInput.type = isPassword ? 'text' : 'password';
+          passwordConfirmToggle.textContent = isPassword ? '👁️‍🗨️' : '👁️';
+        });
+      }
+    });
+  </script>

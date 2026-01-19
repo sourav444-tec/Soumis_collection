@@ -59,7 +59,10 @@ $pageTitle = 'Soumis Collections — Login';
         <label for="email">Email</label>
         <input id="email" name="email" type="email" required placeholder="you@example.com" />
         <label for="password">Password</label>
-        <input id="password" name="password" type="password" required placeholder="Enter your password" />
+        <div class="password-wrapper">
+          <input id="password" name="password" type="password" required placeholder="Enter your password" />
+          <button type="button" class="password-toggle-btn" id="password-toggle" title="Show/hide password">👁️</button>
+        </div>
         <div class="form-row">
           <label class="remember">
             <input type="checkbox" name="remember"> Remember me
@@ -85,17 +88,25 @@ $pageTitle = 'Soumis Collections — Login';
       <form class="auth-form" id="otp-form" action="process-otp-login.php" method="post" style="display:none">
         <label for="otp_email">Email</label>
         <input id="otp_email" name="email" type="email" required placeholder="you@example.com" />
+        
+        <!-- OTP Status Messages -->
+        <div id="otp-status" style="margin-top:10px;font-size:13px;padding:12px;border-radius:6px;display:none">
+          <span id="otp-status-text"></span>
+        </div>
+
         <div style="display:flex;align-items:flex-end;gap:8px;margin-top:12px">
           <div style="flex:1">
             <label for="otp_code">OTP Code</label>
-            <input id="otp_code" name="otp" type="text" pattern="[0-9]{6}" required placeholder="6-digit code" />
+            <input id="otp_code" name="otp" type="text" pattern="[0-9]{6}" inputmode="numeric" required placeholder="6-digit code" maxlength="6" />
+            <small style="color:#999;font-size:12px;display:block;margin-top:4px">Enter the 6-digit code sent to your email</small>
           </div>
-          <button type="button" id="request-otp" class="btn-social" style="white-space:nowrap">Send OTP</button>
+          <button type="button" id="request-otp" class="btn-social" style="white-space:nowrap;cursor:pointer">📧 Send OTP</button>
         </div>
+
         <button class="btn-primary" type="submit" style="margin-top:16px">Login with OTP</button>
+        
         <p style="margin-top:18px;font-size:13px">Have your password? <a href="#" id="show-password">Use password login</a></p>
         <p class="signup">New here? <a href="signup.php">Create an account</a></p>
-        <div id="otp-status" style="margin-top:10px;font-size:13px;color:var(--muted)"></div>
       </form>
     </div>
   </main>
@@ -125,15 +136,66 @@ $pageTitle = 'Soumis Collections — Login';
     showOtp && showOtp.addEventListener('click',e=>{e.preventDefault();swap(true);});
     showPassword && showPassword.addEventListener('click',e=>{e.preventDefault();swap(false);});
     requestOtpBtn && requestOtpBtn.addEventListener('click',async ()=>{
-      otpStatus.textContent='Sending code...';
+      const statusDiv = document.getElementById('otp-status');
+      const statusText = document.getElementById('otp-status-text');
       const emailInput = document.getElementById('otp_email');
       const email = emailInput.value.trim();
-      if(!email){otpStatus.textContent='Enter email first.';return;}
+      
+      // Validate email
+      if(!email){
+        statusDiv.style.display='block';
+        statusDiv.style.background='#ffebee';
+        statusDiv.style.color='#c62828';
+        statusDiv.style.border='1px solid #ffcdd2';
+        statusText.textContent='❌ Please enter your email address';
+        return;
+      }
+      
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if(!emailRegex.test(email)){
+        statusDiv.style.display='block';
+        statusDiv.style.background='#ffebee';
+        statusDiv.style.color='#c62828';
+        statusDiv.style.border='1px solid #ffcdd2';
+        statusText.textContent='❌ Please enter a valid email address';
+        return;
+      }
+
+      statusDiv.style.display='block';
+      statusDiv.style.background='#fff3cd';
+      statusDiv.style.color='#856404';
+      statusDiv.style.border='1px solid #ffeaa7';
+      statusText.textContent='⏳ Sending OTP to ' + email + '...';
+      
       try {
-        const r = await fetch('process-otp-request.php',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'email='+encodeURIComponent(email)});
-        const data = await r.json();
-        if(data.status==='ok'){otpStatus.style.color='green';otpStatus.textContent='OTP sent (demo). Check session/output.';} else {otpStatus.style.color='red';otpStatus.textContent=data.message||'Failed to send OTP.';}
-      } catch(err){otpStatus.style.color='red';otpStatus.textContent='Network error sending OTP.';}
+        const response = await fetch('process-otp-request.php',{
+          method:'POST',
+          headers:{'Content-Type':'application/x-www-form-urlencoded'},
+          body:'email='+encodeURIComponent(email)
+        });
+        const data = await response.json();
+        
+        if(data.status==='ok'){
+          statusDiv.style.background='#e8f5e9';
+          statusDiv.style.color='#2e7d32';
+          statusDiv.style.border='1px solid #c8e6c9';
+          statusText.innerHTML='✓ OTP sent successfully!<br><small style="font-size:11px;margin-top:4px;display:block">Check your email for the 6-digit code. It will expire in 10 minutes.</small>';
+          emailInput.disabled = true;
+          requestOtpBtn.disabled = true;
+          requestOtpBtn.style.opacity = '0.5';
+        } else {
+          statusDiv.style.background='#ffebee';
+          statusDiv.style.color='#c62828';
+          statusDiv.style.border='1px solid #ffcdd2';
+          statusText.textContent='❌ ' + (data.message || 'Failed to send OTP');
+        }
+      } catch(err){
+        statusDiv.style.background='#ffebee';
+        statusDiv.style.color='#c62828';
+        statusDiv.style.border='1px solid #ffcdd2';
+        statusText.textContent='❌ Network error. Please try again.';
+      }
     });
     // Admin mode toggle
     const adminBtn = document.getElementById('admin-mode-btn');
@@ -153,6 +215,18 @@ $pageTitle = 'Soumis Collections — Login';
     });
     // If denied parameter present, ensure UI shows off state
     if (<?php echo $adminDenied ? 'true':'false'; ?>){ setAdminUI(false); }
+    
+    // Password visibility toggle
+    const passwordToggle = document.getElementById('password-toggle');
+    const passwordInput = document.getElementById('password');
+    if (passwordToggle && passwordInput) {
+      passwordToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        passwordToggle.textContent = isPassword ? '👁️‍🗨️' : '👁️';
+      });
+    }
   })();
   </script>
 

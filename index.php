@@ -9,7 +9,7 @@ include 'includes/nav.php';
       <div class="hero-content">
         <h1>Stunning every Ear</h1>
         <div class="hero-buttons">
-          <a class="btn btn-primary" href="#products">SHOP RETAIL</a>
+          <a class="btn btn-primary" href="#products">SHOP RESAIL</a>
           <a class="btn btn-secondary" href="wholesale.php">EXPLORE WHOLESALE</a>
         </div>
       </div>
@@ -39,6 +39,13 @@ include 'includes/nav.php';
             <p>Exclusive designs</p>
           </a>
         </div>
+      </div>
+      
+      <!-- View All Products Button -->
+      <div style="text-align: center; margin-top: 40px;">
+        <a href="products.php" class="btn btn-primary" style="padding: 14px 32px; font-size: 1rem;">
+          🛍️ View All Products
+        </a>
       </div>
     </section>
 

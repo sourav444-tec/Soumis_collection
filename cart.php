@@ -92,28 +92,96 @@ $cartTotal = 0;
             <?php endforeach; ?>
           </div>
           
-          <!-- Cart Summary -->
-          <div style="background: white; border-radius: 8px; padding: 2rem; max-width: 400px; margin-left: auto;">
-            <h3 style="color: #2a2a2a; margin-bottom: 1rem; font-size: 1.5rem;">Order Summary</h3>
-            <div style="border-top: 1px solid #f0f0f0; padding-top: 1rem;">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+          <!-- Cart Summary & Checkout -->
+          <div style="background: white; border-radius: 12px; padding: 28px; max-width: 420px; margin-left: auto; box-shadow: 0 8px 24px rgba(0,0,0,0.08);">
+            <h3 style="color: #2a2a2a; margin-bottom: 20px; font-size: 1.5rem; letter-spacing: 1px;">📋 Order Summary</h3>
+            
+            <!-- Price Breakdown -->
+            <div style="background: #f7f5f2; padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
                 <span style="color: #666;">Subtotal:</span>
                 <span style="color: #2a2a2a; font-weight: 600;">₹<?php echo number_format($cartTotal, 2); ?></span>
               </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
                 <span style="color: #666;">Shipping:</span>
-                <span style="color: #2a2a2a;">Free</span>
+                <span style="color: #2e7d32; font-weight: 600;">FREE ✓</span>
               </div>
-              <div style="display: flex; justify-content: space-between; padding-top: 1rem; border-top: 2px solid #d4af37; margin-bottom: 2rem;">
-                <span style="color: #2a2a2a; font-weight: 600; font-size: 1.2rem;">Total:</span>
-                <span style="color: #d4af37; font-weight: 700; font-size: 1.3rem;">₹<?php echo number_format($cartTotal, 2); ?></span>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                <span style="color: #666;">Tax (est.):</span>
+                <span style="color: #2a2a2a;">₹<?php echo number_format($cartTotal * 0.18, 2); ?></span>
               </div>
-              <button class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1rem; margin-bottom: 1rem;" onclick="alert('Checkout functionality coming soon!')">Proceed to Checkout</button>
-              <a href="index.php" style="display: block; text-align: center; color: #666; text-decoration: none; padding: 0.5rem;">Continue Shopping</a>
+              <div style="border-top: 2px solid #e6e2dc; padding-top: 12px; display: flex; justify-content: space-between;">
+                <span style="color: #2a2a2a; font-weight: 700; font-size: 1.1rem;">Total:</span>
+                <span style="color: #d4af37; font-weight: 700; font-size: 1.2rem;">₹<?php echo number_format($cartTotal * 1.18, 2); ?></span>
+              </div>
+            </div>
+
+            <!-- Shipping Options -->
+            <div style="margin-bottom: 20px;">
+              <label style="display: block; font-size: 13px; color: #7b776f; margin-bottom: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Shipping Option</label>
+              <select style="width: 100%; padding: 10px 12px; border: 1px solid #e6e2dc; border-radius: 6px; font-size: 13px; background: white;">
+                <option value="standard">🚚 Standard (5-7 days) - FREE</option>
+                <option value="express">⚡ Express (2-3 days) - ₹99</option>
+                <option value="overnight">🏃 Overnight - ₹299</option>
+              </select>
+            </div>
+
+            <!-- Payment Methods -->
+            <div style="margin-bottom: 20px;">
+              <label style="display: block; font-size: 13px; color: #7b776f; margin-bottom: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Payment Method</label>
+              <div style="display: grid; gap: 8px;">
+                <label style="display: flex; align-items: center; padding: 10px 12px; border: 2px solid #d4af37; border-radius: 6px; cursor: pointer; background: #faf8f5;">
+                  <input type="radio" name="payment" value="card" checked style="margin-right: 8px;" />
+                  <span style="font-size: 13px;">💳 Credit/Debit Card</span>
+                </label>
+                <label style="display: flex; align-items: center; padding: 10px 12px; border: 1px solid #e6e2dc; border-radius: 6px; cursor: pointer;">
+                  <input type="radio" name="payment" value="upi" style="margin-right: 8px;" />
+                  <span style="font-size: 13px;">📱 UPI</span>
+                </label>
+                <label style="display: flex; align-items: center; padding: 10px 12px; border: 1px solid #e6e2dc; border-radius: 6px; cursor: pointer;">
+                  <input type="radio" name="payment" value="cod" style="margin-right: 8px;" />
+                  <span style="font-size: 13px;">🚚 Cash on Delivery</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Promo Code -->
+            <div style="margin-bottom: 20px;">
+              <div style="display: flex; gap: 8px;">
+                <input type="text" placeholder="Enter promo code" style="flex: 1; padding: 10px 12px; border: 1px solid #e6e2dc; border-radius: 6px; font-size: 13px;" />
+                <button type="button" style="padding: 10px 16px; background: #e6e2dc; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600;">Apply</button>
+              </div>
+            </div>
+
+            <!-- Checkout Button -->
+            <button class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 15px; margin-bottom: 12px; font-weight: 700; border: none; border-radius: 8px; background: linear-gradient(90deg, #d4af37, #e8c851); color: #2a2a2a; cursor: pointer; transition: opacity 0.3s;" onclick="proceedCheckout()">Proceed to Checkout</button>
+            
+            <!-- Continue Shopping -->
+            <a href="index.php" style="display: block; text-align: center; color: #d4af37; text-decoration: none; padding: 10px; font-weight: 600; font-size: 13px;">← Continue Shopping</a>
+
+            <!-- Trust Badge -->
+            <div style="margin-top: 20px; padding: 12px; background: #f7f5f2; border-radius: 6px; text-align: center; border-left: 3px solid #d4af37;">
+              <p style="font-size: 12px; color: #666; margin: 0;">✓ Secure Payment | ✓ 100% Authentic | ✓ 7-Day Returns</p>
             </div>
           </div>
         <?php endif; ?>
       </div>
     </section>
+
+    <script>
+      function proceedCheckout() {
+        const paymentMethod = document.querySelector('input[name="payment"]:checked');
+        if (!paymentMethod) {
+          alert('Please select a payment method');
+          return;
+        }
+        
+        const selectedPayment = paymentMethod.value;
+        alert('Processing ' + selectedPayment.toUpperCase() + ' payment...\n\nCheckout feature coming soon!');
+        
+        // Future: Redirect to payment gateway
+        // window.location.href = 'checkout.php?method=' + selectedPayment;
+      }
+    </script>
 
 <?php include 'includes/footer.php'; ?>
